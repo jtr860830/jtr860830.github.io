@@ -12,6 +12,7 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-MF8MP7FN');</script>
   <!-- End Google Tag Manager -->
+  <link rel="preload" href="/fonts/MapleMono-NF-CN-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     @font-face {
       font-family: 'Maple Mono NF CN';
@@ -118,8 +119,8 @@
   <div class="terminal">
 
     <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('en', this)">EN</button>
-      <button class="lang-btn" onclick="setLang('zh', this)">ZH-TW</button>
+      <button class="lang-btn active" aria-pressed="true" onclick="setLang('en', this)">EN</button>
+      <button class="lang-btn" aria-pressed="false" onclick="setLang('zh', this)">ZH-TW</button>
     </div>
 
     <!-- whoami -->
@@ -179,12 +180,12 @@
     <div class="anim" id="a-o3">
       <div class="output link-row">
         <div class="link-list">
-          <a href="https://hackmd.io/@jtr860830" target="_blank">blog</a>
-          <a href="https://github.com/jtr860830" target="_blank">github</a>
-          <a href="/cv" target="_blank">cv</a>
-          <a href="https://linkedin.com/in/jtr860830" target="_blank">linkedin</a>
-          <a href="https://twitter.com/jtr860830" target="_blank">twitter</a>
-          <a href="https://t.me/jtr860830" target="_blank">telegram</a>
+          <a href="https://hackmd.io/@jtr860830" target="_blank" rel="noopener noreferrer">blog</a>
+          <a href="https://github.com/jtr860830" target="_blank" rel="noopener noreferrer">github</a>
+          <a href="/cv">cv</a>
+          <a href="https://linkedin.com/in/jtr860830" target="_blank" rel="noopener noreferrer">linkedin</a>
+          <a href="https://twitter.com/jtr860830" target="_blank" rel="noopener noreferrer">twitter</a>
+          <a href="https://t.me/jtr860830" target="_blank" rel="noopener noreferrer">telegram</a>
           <a href="mailto:josh.hsieh@linux.com">email</a>
         </div>
       </div>
@@ -253,9 +254,15 @@
     }
 
     function setLang(lang, btn) {
-      document.body.className = lang;
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+      document.body.classList.remove('en', 'zh');
+      document.body.classList.add(lang);
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
     }
 
     window.addEventListener('DOMContentLoaded', animate);
