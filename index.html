@@ -1,33 +1,264 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Josh Hsieh</title>
-  <meta name="description" content="Josh Hsieh" />
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="description" content="Josh Hsieh — Platform Engineer" />
   <!-- Google Tag Manager -->
-  <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({"gtm.start": new Date().getTime(), event: "gtm.js"});
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != "dataLayer" ? "&l=" + l : "";
-      j.async = true;
-      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, "script", "dataLayer", "GTM-MF8MP7FN");
-  </script>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MF8MP7FN');</script>
   <!-- End Google Tag Manager -->
-  <script type="text/javascript" charset="utf-8">
-    location.replace("https://github.com/jtr860830");
-  </script>
+  <style>
+    @font-face {
+      font-family: 'Maple Mono NF CN';
+      src: url('/fonts/MapleMono-NF-CN-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #282c34;
+      color: #abb2bf;
+      font-family: 'Maple Mono NF CN', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+
+    .terminal { width: 100%; max-width: 680px; }
+
+    .lang-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 32px;
+      gap: 4px;
+    }
+    .lang-btn {
+      background: none;
+      border: 1px solid #3b4048;
+      color: #5c6370;
+      padding: 2px 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12px;
+      border-radius: 3px;
+      transition: all 0.15s;
+    }
+    .lang-btn.active { border-color: #61afef; color: #61afef; }
+
+    .prompt { display: flex; align-items: baseline; margin-bottom: 6px; flex-wrap: wrap; }
+    .p-user   { color: #98c379; }
+    .p-at     { color: #abb2bf; }
+    .p-host   { color: #61afef; }
+    .p-path   { color: #abb2bf; }
+    .p-dollar { color: #e5c07b; margin: 0 6px; }
+    .p-cmd    { color: #e06c75; }
+    .p-arg    { color: #d19a66; margin-left: 6px; }
+    .type-cur { color: #abb2bf; margin-left: 1px; }
+    .type-cur.done { display: none; }
+
+    .output { margin: 8px 0 28px 0; padding-left: 2px; }
+
+    .kv-line { display: flex; margin-bottom: 2px; }
+    .kv-key  { color: #e5c07b; min-width: 56px; }
+    .kv-sep  { color: #5c6370; margin: 0 6px; }
+    .kv-val  { color: #abb2bf; }
+
+    .tag-list { display: flex; flex-direction: column; gap: 2px; }
+    .tag { color: #56b6c2; }
+    .tag::before { content: '▸ '; color: #5c6370; }
+
+    .link-list { display: flex; flex-wrap: wrap; gap: 16px; }
+    .link-list a {
+      color: #61afef;
+      text-decoration: none;
+      border-bottom: 1px solid #3b4048;
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .link-list a:hover { color: #c678dd; border-color: #c678dd; }
+
+    .cursor {
+      display: inline-block;
+      width: 9px; height: 15px;
+      background: #abb2bf;
+      vertical-align: middle;
+      animation: blink 1.1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .anim { opacity: 0; }
+    .anim.show { opacity: 1; transition: opacity 0.12s; }
+
+    [data-lang] { display: none; }
+    body.en [data-lang="en"] { display: block; }
+    body.zh [data-lang="zh"] { display: block; }
+    .link-row { display: none; }
+    body.en .link-row, body.zh .link-row { display: block; }
+  </style>
 </head>
-
-<body>
+<body class="en">
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MF8MP7FN" height="0" width="0"
-      style="display: none; visibility: hidden"></iframe></noscript>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MF8MP7FN"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-</body>
 
+  <div class="terminal">
+
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en', this)">EN</button>
+      <button class="lang-btn" onclick="setLang('zh', this)">ZH-TW</button>
+    </div>
+
+    <!-- whoami -->
+    <div class="anim" id="a-p1">
+      <div class="prompt">
+        <span class="p-user">me</span><span class="p-at">@</span><span class="p-host">josh.tw</span><span class="p-path"> ~ </span><span class="p-dollar">$</span><span class="p-cmd" id="cmd1"></span><span class="type-cur" id="tc1">▌</span>
+      </div>
+    </div>
+    <div class="anim" id="a-o1">
+      <div class="output" data-lang="en">
+        <div class="kv-line"><span class="kv-key">name</span><span class="kv-sep">:</span><span class="kv-val">Josh Hsieh</span></div>
+        <div class="kv-line"><span class="kv-key">role</span><span class="kv-sep">:</span><span class="kv-val">Ph.D. student · Platform Engineer</span></div>
+        <div class="kv-line"><span class="kv-key">focus</span><span class="kv-sep">:</span><span class="kv-val">Infrastructure · Operating System · Networking</span></div>
+        <div class="kv-line"><span class="kv-key">loc</span><span class="kv-sep">:</span><span class="kv-val">Taiwan</span></div>
+      </div>
+      <div class="output" data-lang="zh">
+        <div class="kv-line"><span class="kv-key">姓名</span><span class="kv-sep">：</span><span class="kv-val">謝禹沆 (Josh)</span></div>
+        <div class="kv-line"><span class="kv-key">身份</span><span class="kv-sep">：</span><span class="kv-val">博士生 · Platform Engineer</span></div>
+        <div class="kv-line"><span class="kv-key">專注</span><span class="kv-sep">：</span><span class="kv-val">基礎設施 · 作業系統 · 網路</span></div>
+        <div class="kv-line"><span class="kv-key">地點</span><span class="kv-sep">：</span><span class="kv-val">台灣</span></div>
+      </div>
+    </div>
+
+    <!-- cat interests.md -->
+    <div class="anim" id="a-p2">
+      <div class="prompt">
+        <span class="p-user">me</span><span class="p-at">@</span><span class="p-host">josh.tw</span><span class="p-path"> ~ </span><span class="p-dollar">$</span><span class="p-cmd" id="cmd2"></span><span class="p-arg" id="arg2"></span><span class="type-cur" id="tc2">▌</span>
+      </div>
+    </div>
+    <div class="anim" id="a-o2">
+      <div class="output" data-lang="en">
+        <div class="tag-list">
+          <span class="tag">Infrastructure</span>
+          <span class="tag">Linux</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">Container</span>
+          <span class="tag">Rust</span>
+        </div>
+      </div>
+      <div class="output" data-lang="zh">
+        <div class="tag-list">
+          <span class="tag">基礎設施</span>
+          <span class="tag">Linux</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">容器技術</span>
+          <span class="tag">Rust</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ls links/ -->
+    <div class="anim" id="a-p3">
+      <div class="prompt">
+        <span class="p-user">me</span><span class="p-at">@</span><span class="p-host">josh.tw</span><span class="p-path"> ~ </span><span class="p-dollar">$</span><span class="p-cmd" id="cmd3"></span><span class="p-arg" id="arg3"></span><span class="type-cur" id="tc3">▌</span>
+      </div>
+    </div>
+    <div class="anim" id="a-o3">
+      <div class="output link-row">
+        <div class="link-list">
+          <a href="https://hackmd.io/@jtr860830" target="_blank">blog</a>
+          <a href="https://github.com/jtr860830" target="_blank">github</a>
+          <a href="/cv" target="_blank">cv</a>
+          <a href="https://linkedin.com/in/jtr860830" target="_blank">linkedin</a>
+          <a href="https://twitter.com/jtr860830" target="_blank">twitter</a>
+          <a href="https://t.me/jtr860830" target="_blank">telegram</a>
+          <a href="mailto:josh.hsieh@linux.com">email</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final cursor -->
+    <div class="anim" id="a-cur">
+      <div class="prompt">
+        <span class="p-user">me</span><span class="p-at">@</span><span class="p-host">josh.tw</span><span class="p-path"> ~ </span><span class="p-dollar">$</span>
+        <span class="cursor"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    function show(id) {
+      document.getElementById(id).classList.add('show');
+    }
+
+    async function type(cmdEl, text, tcEl, argEl) {
+      if (argEl) {
+        const spaceIdx = text.indexOf(' ');
+        const cmd = text.slice(0, spaceIdx);
+        const arg = text.slice(spaceIdx + 1);
+        for (const ch of cmd) {
+          cmdEl.textContent += ch;
+          await sleep(38 + Math.random() * 22);
+        }
+        if (arg) argEl.textContent = arg;
+      } else {
+        for (const ch of text) {
+          cmdEl.textContent += ch;
+          await sleep(38 + Math.random() * 22);
+        }
+      }
+      tcEl.classList.add('done');
+    }
+
+    async function animate() {
+      const steps = [
+        { prompt: 'a-p1', cmd: 'cmd1', tc: 'tc1', out: 'a-o1', text: 'whoami' },
+        { prompt: 'a-p2', cmd: 'cmd2', tc: 'tc2', arg: 'arg2', out: 'a-o2', text: 'cat interests.md' },
+        { prompt: 'a-p3', cmd: 'cmd3', tc: 'tc3', arg: 'arg3', out: 'a-o3', text: 'ls links/' },
+      ];
+
+      await sleep(300);
+
+      for (const s of steps) {
+        show(s.prompt);
+        await sleep(60);
+        await type(
+          document.getElementById(s.cmd),
+          s.text,
+          document.getElementById(s.tc),
+          s.arg ? document.getElementById(s.arg) : null
+        );
+        await sleep(140);
+        show(s.out);
+        await sleep(380);
+      }
+
+      show('a-cur');
+    }
+
+    function setLang(lang, btn) {
+      document.body.className = lang;
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', animate);
+  </script>
+</body>
 </html>
