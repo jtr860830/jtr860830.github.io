@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="PingFang TC, Microsoft JhengHei, Noto Sans TC, sans-serif">
+  <!-- 學員 -->
+  <g>
+    <circle cx="95" cy="215" r="26" fill="#262626"/>
+    <path d="M50 300 Q95 245 140 300 L140 316 L50 316 Z" fill="#262626"/>
+    <text x="95" y="345" font-size="22" font-weight="700" text-anchor="middle" fill="#262626">你（學員）</text>
+  </g>
+
+  <!-- 連線方式 -->
+  <g>
+    <line x1="150" y1="268" x2="252" y2="268" stroke="#d50005" stroke-width="4"/>
+    <path d="M252 268 l-14 -8 v16 Z" fill="#d50005"/>
+    <text x="201" y="238" font-size="17" text-anchor="middle" fill="#5a5a5a">瀏覽器</text>
+    <text x="201" y="258" font-size="17" text-anchor="middle" fill="#5a5a5a">Guacamole</text>
+    <text x="201" y="292" font-size="15" text-anchor="middle" fill="#8f8f8f">遠端桌面</text>
+    <text x="201" y="310" font-size="15" text-anchor="middle" fill="#8f8f8f">Port：3389</text>
+  </g>
+
+  <!-- Podman Host（VM） -->
+  <rect x="262" y="48" width="706" height="452" rx="14" fill="#f8f7f6" stroke="#9a9a9a" stroke-width="2.5"/>
+  <text x="286" y="86" font-size="22" font-weight="700" fill="#262626">podman1｜Ubuntu Desktop / Podman Host</text>
+  <rect x="880" y="62" width="52" height="30" rx="6" fill="#9a9a9a"/>
+  <text x="906" y="83" font-size="16" font-weight="700" text-anchor="middle" fill="#ffffff">VM</text>
+  <rect x="252" y="252" width="56" height="30" rx="6" fill="#51616b"/>
+  <text x="280" y="273" font-size="16" font-weight="700" text-anchor="middle" fill="#ffffff">eth0</text>
+
+  <!-- 三台 K8s 節點（Container） -->
+  <g font-size="19" font-weight="700" text-anchor="middle">
+    <g>
+      <rect x="296" y="128" width="200" height="150" rx="10" fill="#ffffff" stroke="#c00000" stroke-width="2.5"/>
+      <rect x="296" y="128" width="200" height="10" rx="5" fill="#d50005"/>
+      <text x="396" y="188" fill="#262626">tk8s-</text>
+      <text x="396" y="214" fill="#262626">control-plane</text>
+      <rect x="336" y="234" width="120" height="26" rx="13" fill="#faf0ec"/>
+      <text x="396" y="253" font-size="15" fill="#c00000">Container</text>
+    </g>
+    <g>
+      <rect x="516" y="128" width="200" height="150" rx="10" fill="#ffffff" stroke="#c00000" stroke-width="2.5"/>
+      <rect x="516" y="128" width="200" height="10" rx="5" fill="#d50005"/>
+      <text x="616" y="202" fill="#262626">tk8s-worker1</text>
+      <rect x="556" y="234" width="120" height="26" rx="13" fill="#faf0ec"/>
+      <text x="616" y="253" font-size="15" fill="#c00000">Container</text>
+    </g>
+    <g>
+      <rect x="736" y="128" width="200" height="150" rx="10" fill="#ffffff" stroke="#c00000" stroke-width="2.5"/>
+      <rect x="736" y="128" width="200" height="10" rx="5" fill="#d50005"/>
+      <text x="836" y="202" fill="#262626">tk8s-worker2</text>
+      <rect x="776" y="234" width="120" height="26" rx="13" fill="#faf0ec"/>
+      <text x="836" y="253" font-size="15" fill="#c00000">Container</text>
+    </g>
+  </g>
+
+  <!-- 節點連到橋接器 -->
+  <g stroke="#5a5a5a" stroke-width="3">
+    <line x1="396" y1="278" x2="396" y2="368"/>
+    <line x1="616" y1="278" x2="616" y2="368"/>
+    <line x1="836" y1="278" x2="836" y2="368"/>
+  </g>
+
+  <!-- tk8s Virtual Bridge -->
+  <defs>
+    <linearGradient id="bridge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d50005"/>
+      <stop offset="1" stop-color="#f26b43"/>
+    </linearGradient>
+  </defs>
+  <rect x="296" y="368" width="640" height="44" rx="10" fill="url(#bridge)"/>
+  <text x="616" y="397" font-size="21" font-weight="700" text-anchor="middle" fill="#ffffff">tk8s Virtual Bridge</text>
+
+  <!-- 橋接器連到 eth0 -->
+  <path d="M296 390 H280 V282" stroke="#5a5a5a" stroke-width="3" fill="none"/>
+
+  <!-- Podman 標註 -->
+  <text x="286" y="470" font-size="17" fill="#8f8f8f">整套 tk8s 叢集＝Podman 上的 3 個 container（做壞了，幾分鐘就能重建）</text>
+
+  <!-- 圖例 -->
+  <g font-size="16" fill="#5a5a5a">
+    <rect x="46" y="428" width="26" height="18" rx="4" fill="none" stroke="#9a9a9a" stroke-width="2.5"/>
+    <text x="82" y="443">VM</text>
+    <rect x="46" y="460" width="26" height="18" rx="4" fill="none" stroke="#c00000" stroke-width="2.5"/>
+    <text x="82" y="475">Container</text>
+    <text x="46" y="414" font-size="17" font-weight="700" fill="#262626">圖例</text>
+  </g>
+</svg>
