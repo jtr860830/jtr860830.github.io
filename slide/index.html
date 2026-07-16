@@ -1021,9 +1021,9 @@ mysqladmin
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="61" data-paginate="true" data-footer="© 2026 Brobridge Co., Ltd." data-theme="brobridge" lang="en-US" data-marpit-pagination="60" style="--paginate:true;--footer:© 2026 Brobridge Co., Ltd.;--theme:brobridge;" data-marpit-pagination-total="83">
 <h1 id="%E5%84%B2%E5%AD%98%E7%9A%84%E6%BC%94%E9%80%B2%E5%BE%9E-volume-%E5%88%B0-pv--pvc">儲存的演進：從 Volume 到 PV / PVC</h1>
 <ul>
-<li>Container 的檔案系統是<strong>用過即丟</strong>——Pod 重建，資料歸零</li>
-<li>第一步：<code>hostPath</code> 把節點目錄掛進來 → 但 Pod 漂到別台就讀不到了</li>
-<li>K8s 的解法：把「提供儲存」跟「使用儲存」<strong>拆開</strong></li>
+<li>Container 的檔案系統<strong>用過即丟</strong>——Pod 重建，資料歸零 → 資料要掛外部儲存</li>
+<li><code>hostPath</code> 綁死節點，Pod 漂走就讀不到 → 要用<strong>不綁節點的儲存</strong>（NFS、SAN ⋯⋯）</li>
+<li>總不能要求每個開發者都會連儲存設備 → K8s 把「提供」跟「使用」<strong>拆開</strong>：</li>
 </ul>
 <table>
 <thead>
