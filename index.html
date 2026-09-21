@@ -131,8 +131,8 @@
     [data-lang] { display: none; }
     body.en [data-lang="en"] { display: block; }
     body.zh [data-lang="zh"] { display: block; }
-    .link-row { display: none; }
-    body.en .link-row, body.zh .link-row { display: block; }
+    .lang-any { display: none; }
+    body.en .lang-any, body.zh .lang-any { display: block; }
   </style>
 </head>
 <body class="en">
@@ -159,13 +159,13 @@
     <div class="anim" id="a-o1">
       <div class="output" data-lang="en">
         <div class="kv-line"><span class="kv-key">name</span><span class="kv-sep">:</span><span class="kv-val">Josh Hsieh</span></div>
-        <div class="kv-line"><span class="kv-key">role</span><span class="kv-sep">:</span><span class="kv-val">Ph.D. student · Platform Engineer</span></div>
+        <div class="kv-line"><span class="kv-key">role</span><span class="kv-sep">:</span><span class="kv-val">Ph.D. student · Platform Engineer · Instructor</span></div>
         <div class="kv-line"><span class="kv-key">focus</span><span class="kv-sep">:</span><span class="kv-val">Infrastructure · Operating System · Networking</span></div>
         <div class="kv-line"><span class="kv-key">loc</span><span class="kv-sep">:</span><span class="kv-val">Taiwan</span></div>
       </div>
       <div class="output" data-lang="zh">
         <div class="kv-line"><span class="kv-key">姓名</span><span class="kv-sep">：</span><span class="kv-val">謝禹沆 (Josh)</span></div>
-        <div class="kv-line"><span class="kv-key">身份</span><span class="kv-sep">：</span><span class="kv-val">博士生 · Platform Engineer</span></div>
+        <div class="kv-line"><span class="kv-key">身份</span><span class="kv-sep">：</span><span class="kv-val">博士生 · 平台工程師 · 講師</span></div>
         <div class="kv-line"><span class="kv-key">專注</span><span class="kv-sep">：</span><span class="kv-val">基礎設施 · 作業系統 · 網路</span></div>
         <div class="kv-line"><span class="kv-key">地點</span><span class="kv-sep">：</span><span class="kv-val">台灣</span></div>
       </div>
@@ -178,21 +178,12 @@
       </div>
     </div>
     <div class="anim" id="a-o2">
-      <div class="output" data-lang="en">
+      <div class="output lang-any">
         <div class="tag-list">
           <span class="tag">Infrastructure</span>
           <span class="tag">Linux</span>
           <span class="tag">Kubernetes</span>
           <span class="tag">Container</span>
-          <span class="tag">Rust</span>
-        </div>
-      </div>
-      <div class="output" data-lang="zh">
-        <div class="tag-list">
-          <span class="tag">基礎設施</span>
-          <span class="tag">Linux</span>
-          <span class="tag">Kubernetes</span>
-          <span class="tag">容器技術</span>
           <span class="tag">Rust</span>
         </div>
       </div>
@@ -205,7 +196,7 @@
       </div>
     </div>
     <div class="anim" id="a-o3">
-      <div class="output link-row">
+      <div class="output lang-any">
         <div class="link-list">
           <a href="/blog" target="_blank" rel="noopener noreferrer">blog</a>
           <a href="https://github.com/jtr860830" target="_blank" rel="noopener noreferrer">github</a>
