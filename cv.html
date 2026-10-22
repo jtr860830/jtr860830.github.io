@@ -21,7 +21,18 @@
     })();
   </script>
   <title>CV · Josh Hsieh</title>
-  <meta name="description" content="Josh Hsieh (謝禹沆) — Platform Engineer, Open Source Advocate. CV." />
+  <meta name="description" content="CV of Josh Hsieh (謝禹沆) — Platform Engineer and Open Source Advocate. Kubernetes, Linux infrastructure, and open source." />
+  <link rel="canonical" href="https://www.josh.tw/cv" />
+  <!-- Link previews (Open Graph / Twitter card) -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Josh Hsieh" />
+  <meta property="og:url" content="https://www.josh.tw/cv" />
+  <meta property="og:title" content="CV · Josh Hsieh (謝禹沆)" />
+  <meta property="og:description" content="Platform Engineer and Open Source Advocate. Kubernetes, Linux infrastructure, and open source." />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CV · Josh Hsieh (謝禹沆)" />
+  <meta name="twitter:description" content="Platform Engineer and Open Source Advocate. Kubernetes, Linux infrastructure, and open source." />
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -33,7 +44,7 @@
   <link rel="preload" href="/fonts/lato-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/raleway-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-    /* Open-source fonts, self-hosted (SIL Open Font License 1.1):
+    /* Open-source fonts, self-hosted (SIL Open Font License 1.1; sources and licenses in /fonts/README.md):
        Raleway for headings and names, Lato for text.
        Noto Sans TC is subset to the three glyphs of the Chinese name (謝禹沆). */
     @font-face { font-family: 'Lato'; src: url('/fonts/lato-latin-400-normal.woff2') format('woff2');
@@ -122,13 +133,14 @@
     /* Raleway defaults to old-style figures; lining figures read better in names like ModernWeb'19. */
     .name, .section-title, .org, .skill { font-family: var(--display); font-variant-numeric: lining-nums; }
 
-    /* ---------- Header: aligned with the content column ---------- */
-    .cv-header { display: flex; flex-direction: column; padding-left: calc(var(--label-w) + var(--gap)); }
+    /* ---------- Header: left-aligned with the section titles ---------- */
+    .cv-header { display: flex; flex-direction: column; }
     .cv-header .toolbar { order: -1; align-self: flex-end; margin-bottom: 20px; }
     .name { color: var(--red); font-size: 38px; font-weight: 700; line-height: 1.15; }
     .name-zh { display: inline-block; font-family: var(--cjk); color: var(--comment);
                font-size: 19px; font-weight: 400; margin-left: 10px; letter-spacing: 0.05em; }
     .tagline { color: var(--green); font-size: 17px; margin-top: 6px; }
+    .intro { margin-top: 10px; }
 
     .contact-line { margin-top: 12px; font-size: 14.5px; display: flex; flex-wrap: wrap; column-gap: 22px; row-gap: 4px; }
     .ci { display: inline-flex; align-items: center; gap: 6px; }
@@ -143,55 +155,59 @@
     }
     .toolbar a:hover, .toolbar button:hover { color: var(--blue); border-color: var(--blue); }
 
-    /* Theme toggle: shows the current mode (Tabler Icons sun/moon, MIT) */
+    /* Theme toggle: shows the current mode. Icons: Tabler Icons sun/moon, MIT License: /licenses/Tabler-Icons-MIT.txt */
     .theme-btn { display: inline-flex; align-items: center; justify-content: center; }
     .ti { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2;
           stroke-linecap: round; stroke-linejoin: round; }
     :root[data-theme="light"] .ti-moon, :root:not([data-theme="light"]) .ti-sun { display: none; }
 
-    /* ---------- Sections: title in a left column, content on the right ---------- */
-    .sec {
-      display: grid; grid-template-columns: var(--label-w) 1fr; column-gap: var(--gap);
-      margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line);
-    }
-    .section-title { color: var(--red); font-size: 18px; font-weight: 700; line-height: 1.35; }
+    /* ---------- Sections: full-width heading; inside, a "when | what" grid ----------
+       The left column carries the dates (and skill names), so it reads as a timeline
+       instead of an empty gutter under the section title. */
+    .sec { margin-top: 40px; }
+    .section-title { color: var(--red); font-size: 18px; font-weight: 700; line-height: 1.35;
+                     padding-bottom: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--line); }
     .sec-body { min-width: 0; }
-    .lead { font-size: 17px; line-height: 1.65; }
+    .note { margin-left: calc(var(--label-w) + var(--gap)); }
     .note { color: var(--comment); font-size: 14px; margin-top: 14px; }
 
-    /* Entries: experience, community, education, certifications */
-    .entry { margin-bottom: 26px; }
+    .entry { display: grid; grid-template-columns: var(--label-w) 1fr; column-gap: var(--gap); margin-bottom: 26px; }
     .entry:last-child { margin-bottom: 0; }
-    .row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 16px; }
-    .org  { color: var(--orange); font-size: 17px; font-weight: 700; }
+    .when { color: var(--comment); font-size: 14px; line-height: 1.6; padding-top: 3px; font-variant-numeric: tabular-nums; }
+    .what { min-width: 0; }
+    .org  { color: var(--orange); font-size: 17px; font-weight: 700; line-height: 1.5; }
+    .sub  { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; }
     .role { color: var(--purple); font-style: italic; }
-    .meta { color: var(--comment); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .plain { color: var(--fg); }
+    .place { color: var(--comment); font-size: 14px; }
+    .place::before { content: '·'; margin-right: 8px; }
+    .loc { color: var(--comment); font-size: 14px; }
+
+    /* One organization, several roles (LinkedIn-style): each role keeps its own line and bullet */
+    .role-item { margin-top: 8px; }
+    .role-item .bullets { margin-top: 2px; }
 
     .bullets { list-style: none; margin-top: 8px; }
     .bullets li { position: relative; padding-left: 1.2em; margin-bottom: 4px; }
     .bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--yellow); }
 
-    /* Compact rows for certifications */
-    .cert { margin-bottom: 10px; }
-    .cert:last-child { margin-bottom: 0; }
-    .cert a { font-weight: 700; }
-    .cert .plain { margin-left: 10px; }
+    /* Certifications: same two-line entry as experience; issuer sits where role/place sit */
+    .cert { margin-bottom: 16px; }
+    .cert-name { line-height: 1.5; }
+    .cert-name a { font-weight: 700; }
+    .issuer { color: var(--comment); font-size: 14px; }
 
-    /* Skills: name + years on the left, description on the right */
-    .skills { display: grid; grid-template-columns: 190px 1fr; column-gap: 24px; row-gap: 14px; }
-    .skill { color: var(--orange); font-size: 17px; font-weight: 700; line-height: 1.4; }
-    .years { display: block; color: var(--comment); font-family: var(--text); font-size: 13.5px; font-weight: 400; }
+    /* Skills use the same entry layout: start year on the left, skill name over its description */
+    .skill { color: var(--orange); font-size: 17px; font-weight: 700; line-height: 1.5; }
+    .desc  { margin-top: 2px; }
 
     @media screen and (max-width: 720px) {
       body { font-size: 15px; padding: 32px 16px 56px; }
-      .cv-header { padding-left: 0; }
       .name { font-size: 30px; }
       .name-zh { display: block; margin: 6px 0 0; }
-      .sec { grid-template-columns: 1fr; row-gap: 14px; margin-top: 32px; }
-      .skills { grid-template-columns: 1fr; row-gap: 2px; }
-      .skills dd { margin-bottom: 12px; }
-      .meta { white-space: normal; }
+      .sec { margin-top: 32px; }
+      .note { margin-left: 0; }
+      .entry { grid-template-columns: 1fr; }
+      .when { padding-top: 0; font-size: 13.5px; }
     }
 
     /* ---------- Print: same layout on white, for applications and ATS parsing ---------- */
@@ -204,18 +220,20 @@
         --bg: #fff; --fg: #24292f; --comment: #57606a; --line: #d0d7de;
         --red: #24292f; --yellow: #24292f; --orange: #24292f; --green: #57606a;
         --blue: #0b5cad; --purple: #24292f;
-        --label-w: 27mm; --gap: 6mm;
+        --label-w: 31mm; --gap: 5mm;
       }
-      body { font-size: 9.5pt; line-height: 1.42; padding: 0; }
+      body { font-size: 9.5pt; line-height: 1.38; padding: 0; }
       /* Firefox drops ligature and alternate-figure glyphs from the PDF text layer
          ("workows", "Hackathon "), which breaks copy/paste and ATS parsing. */
       * { font-variant-ligatures: none; font-variant-numeric: normal !important; font-feature-settings: normal; }
-      /* Firefox cannot split a grid item across pages, so a long section jumps to the next page whole.
-         Print sections as plain blocks instead. The title stays in normal flow (so PDF text order is
-         "title, then content" for ATS) but has zero height and is pulled into the left column. */
-      .sec { display: block; padding-left: calc(var(--label-w) + var(--gap)); }
-      .section-title { height: 0; width: var(--label-w); margin-left: calc(-1 * (var(--label-w) + var(--gap)));
-                       overflow: visible; break-after: avoid; }
+      /* Sections are plain blocks and each entry is a small grid that never splits (break-inside: avoid),
+         so Firefox has no large grid item it would have to push to the next page whole. */
+      .section-title { break-after: avoid; }
+      /* Firefox ignores break-after: avoid. Reserve room for the first entry under each heading:
+         an unbreakable heading with an invisible 24mm tail moves to the next page when the tail
+         would not fit, so a heading is never left alone at the bottom of a page. */
+      .section-title { break-inside: avoid; }
+      .section-title::after { content: ""; display: block; height: 24mm; margin-bottom: -24mm; }
       .cv { max-width: none; }
       .no-print { display: none !important; }
       .name { font-size: 22pt; }
@@ -224,14 +242,17 @@
       .contact-line { font-size: 9pt; margin-top: 5px; column-gap: 12px; }
       .ci { gap: 4px; }
       a { border-bottom: none; }
-      .sec { margin-top: 10px; padding-top: 8px; }
-      .section-title { font-size: 11pt; }
-      .lead { font-size: 9.5pt; }
+      .sec { margin-top: 12px; }
+      .section-title { font-size: 11pt; padding-bottom: 3px; margin-bottom: 7px; }
+      .intro { margin-top: 4px; }
       .org, .skill { font-size: 10.5pt; }
-      .meta, .years { font-size: 8.5pt; }
-      .entry { margin-bottom: 8px; break-inside: avoid; }
-      .cert { margin-bottom: 3px; }
-      .skills { grid-template-columns: 40mm 1fr; row-gap: 5px; column-gap: 4mm; }
+      .when, .place, .loc { font-size: 8.5pt; }
+      .role-item { margin-top: 2px; }
+      .when { padding-top: 1.5pt; }
+      .entry { margin-bottom: 6px; break-inside: avoid; }
+      .desc { margin-top: 0; }
+      .cert { margin-bottom: 4px; }
+      .issuer { font-size: 8.5pt; }
       .bullets { margin-top: 2px; }
       .bullets li { margin-bottom: 1px; }
       /* Native list markers keep PDF text order intact for ATS parsing. */
@@ -254,7 +275,8 @@
     <header class="cv-header">
       <h1 class="name">Yu Hang Hsieh <span class="name-zh">謝禹沆 · Josh</span></h1>
       <p class="tagline">Platform Engineer · Open Source Advocate</p>
-      <!-- Icons: Tabler Icons v3.49.0 (MIT), https://tabler.io/icons -->
+      <p class="intro">System architect passionate about open-source contributions and designing innovative solutions.</p>
+      <!-- Icons: Tabler Icons v3.49.0, https://tabler.io/icons, MIT License: /licenses/Tabler-Icons-MIT.txt -->
       <p class="contact-line">
         <span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M3 7l9 6l9 -6"/></svg><a href="mailto:josh.hsieh@linux.com">josh.hsieh@linux.com</a></span>
         <span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg><a href="https://www.josh.tw">www.josh.tw</a></span>
@@ -269,91 +291,111 @@
     </header>
 
     <section class="sec">
-      <h2 class="section-title">Summary</h2>
-      <div class="sec-body">
-        <p class="lead">Platform engineer and system architect, passionate about open-source contributions and designing innovative solutions.</p>
-      </div>
-    </section>
-
-    <section class="sec">
       <h2 class="section-title">Experience</h2>
       <div class="sec-body">
         <article class="entry">
-          <div class="row"><span class="org">Brobridge</span><span class="meta">Mar 2026 – present</span></div>
-          <div class="row"><span class="role">Platform Engineer</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Leading enterprise-grade Kubernetes implementations across diverse distributions, integrating the platform with corporate logging systems, monitoring stacks, and legacy infrastructure.</li>
-            <li>Architecting high-availability Linux infrastructure and advanced networking (BGP, LVS, and overlay networks) to optimize performance, security, and stability in large-scale environments.</li>
-          </ul>
+          <div class="when">Mar 2026 – present</div>
+          <div class="what">
+            <div class="org">Brobridge</div>
+            <div class="sub"><span class="role">Platform Engineer</span><span class="place">Taipei, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Leading enterprise-grade Kubernetes implementations across diverse distributions, integrating the platform with corporate logging systems, monitoring stacks, and legacy infrastructure.</li>
+              <li>Architecting high-availability Linux infrastructure and advanced networking (BGP, LVS, and overlay networks) to optimize performance, security, and stability in large-scale environments.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">SUSE</span><span class="meta">Jun 2025 – Feb 2026</span></div>
-          <div class="row"><span class="role">Solution Architect</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Orchestrated and managed container platforms with Rancher and RKE2, and implemented automated GitOps workflows with Fleet and Argo CD for scalable cluster operations.</li>
-            <li>Maintained and optimized SUSE Linux Enterprise Server (SLES) infrastructure for stability, security, and performance across internal server environments.</li>
-          </ul>
+          <div class="when">Jun 2025 – Feb 2026</div>
+          <div class="what">
+            <div class="org">SUSE</div>
+            <div class="sub"><span class="role">Solution Architect</span><span class="place">Taipei, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Orchestrated and managed container platforms with Rancher and RKE2, and implemented automated GitOps workflows with Fleet and Argo CD for scalable cluster operations.</li>
+              <li>Maintained and optimized SUSE Linux Enterprise Server (SLES) infrastructure for stability, security, and performance across internal server environments.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">Imonology</span><span class="meta">Apr 2022 – Jun 2025</span></div>
-          <div class="row"><span class="role">Software Engineer</span><span class="meta">Remote</span></div>
-          <ul class="bullets">
-            <li>Designed and developed systems tailored to client needs, delivering customized and scalable solutions.</li>
-            <li>Maintained and managed internal Linux servers, ensuring stability, security, and performance.</li>
-          </ul>
+          <div class="when">Apr 2022 – Jun 2025</div>
+          <div class="what">
+            <div class="org">Imonology</div>
+            <div class="sub"><span class="role">Software Engineer</span><span class="place">Part-time</span><span class="place">Remote</span></div>
+            <ul class="bullets">
+              <li>Designed and developed systems tailored to client needs, delivering customized and scalable solutions.</li>
+              <li>Planned and built development, testing, and production environments for client systems, internal tools, and databases across GCP, AWS, and DigitalOcean, with containerized, automated deployments.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">Joint Commonwealth Fund</span><span class="meta">Mar 2022 – Jun 2025</span></div>
-          <div class="row"><span class="role">Software Engineer</span><span class="meta">Remote</span></div>
-          <ul class="bullets">
-            <li>Designed and implemented blockchain-based web APIs, delivering secure and scalable solutions for decentralized applications.</li>
-            <li>Maintained and managed internal Linux servers, ensuring stability, security, and performance.</li>
-          </ul>
+          <div class="when">Mar 2022 – Jun 2025</div>
+          <div class="what">
+            <div class="org">Joint Commonwealth Fund</div>
+            <div class="sub"><span class="role">Software Engineer</span><span class="place">Part-time</span><span class="place">Remote</span></div>
+            <ul class="bullets">
+              <li>Developed smart contracts along with the web APIs and front-end interfaces that integrate with them, delivering secure and scalable decentralized applications.</li>
+              <li>Built and maintained the production and development environments for these services and internal tools, containerizing deployments and handling security hardening and upgrades.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">Billionaire</span><span class="meta">Nov 2022 – Sep 2023</span></div>
-          <div class="row"><span class="role">Software Engineer</span><span class="meta">Taichung, Taiwan / Remote</span></div>
-          <ul class="bullets">
-            <li>Integrated automated development workflows, including Git, CI/CD pipelines, auto-formatting, and auto-linting, significantly improving efficiency and code quality.</li>
-            <li>Designed and implemented a client's e-commerce website, delivering a robust and scalable platform for online sales.</li>
-            <li>Maintained and optimized client website servers for reliability, security, and high availability.</li>
-          </ul>
+          <div class="when">Nov 2022 – Sep 2023</div>
+          <div class="what">
+            <div class="org">Billionaire</div>
+            <div class="sub"><span class="role">Software Engineer</span><span class="place">Taichung, Taiwan / Remote</span></div>
+            <ul class="bullets">
+              <li>Integrated automated development workflows, including Git, CI/CD pipelines, auto-formatting, and auto-linting, significantly improving efficiency and code quality.</li>
+              <li>Designed and implemented a client's e-commerce website, delivering a robust and scalable platform for online sales.</li>
+              <li>Maintained and optimized client website servers for reliability, security, and high availability.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">GLSoft</span><span class="meta">Jul 2022 – Nov 2022</span></div>
-          <div class="row"><span class="role">Software Engineer</span><span class="meta">Remote</span></div>
-          <ul class="bullets">
-            <li>Introduced agile development practices, significantly improving the team's development process.</li>
-            <li>Onboarded and trained new hires to quickly adapt to company technologies and workflows.</li>
-            <li>Maintained and updated the company's product websites, proactively fixing bugs to improve user experience and reliability.</li>
-          </ul>
+          <div class="when">Jul 2022 – Nov 2022</div>
+          <div class="what">
+            <div class="org">GLSoft</div>
+            <div class="sub"><span class="role">Software Engineer</span><span class="place">Remote</span></div>
+            <ul class="bullets">
+              <li>Introduced agile development practices, significantly improving the team's development process.</li>
+              <li>Onboarded and trained new hires to quickly adapt to company technologies and workflows.</li>
+              <li>Maintained and updated the company's product websites, proactively fixing bugs to improve user experience and reliability.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">YahuTech</span><span class="meta">Nov 2021 – Aug 2022</span></div>
-          <div class="row"><span class="role">Software Engineer</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Maintained and optimized the company's internal Linux servers for stability and performance.</li>
-            <li>Developed and deployed web services with an internal framework, delivering features aligned with business needs.</li>
-          </ul>
+          <div class="when">Nov 2021 – Aug 2022</div>
+          <div class="what">
+            <div class="org">YahuTech</div>
+            <div class="sub"><span class="role">Software Engineer</span><span class="place">Taipei, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Maintained and optimized the company's internal Linux servers for stability and performance.</li>
+              <li>Developed and deployed web services with an internal framework, delivering features aligned with business needs.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">SourceZones</span><span class="meta">Aug 2019 – Aug 2021</span></div>
-          <div class="row"><span class="role">Software Engineer</span><span class="meta">Taipei, Taiwan / Remote</span></div>
-          <ul class="bullets">
-            <li>Designed and implemented a client data synchronization system, enabling fully automated data updates.</li>
-            <li>Conducted on-site maintenance and troubleshooting at client locations, resolving issues promptly.</li>
-            <li>Developed RESTful APIs for comprehensive Taiwan company information.</li>
-            <li>Built and maintained web crawlers to extract and aggregate data on Taiwan companies.</li>
-            <li>Established and optimized data pipelines for processing crawler output.</li>
-          </ul>
+          <div class="when">Aug 2019 – Aug 2021</div>
+          <div class="what">
+            <div class="org">SourceZones</div>
+            <div class="sub"><span class="role">Software Engineer</span><span class="place">Taipei, Taiwan / Remote</span></div>
+            <ul class="bullets">
+              <li>Designed and implemented a client data synchronization system, enabling fully automated data updates.</li>
+              <li>Conducted on-site maintenance and troubleshooting at client locations, resolving issues promptly.</li>
+              <li>Developed RESTful APIs for comprehensive Taiwan company information.</li>
+              <li>Built and maintained web crawlers to extract and aggregate data on Taiwan companies.</li>
+              <li>Established and optimized data pipelines for processing crawler output.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">Chunghwa Telecom</span><span class="meta">Apr 2019 – Aug 2019</span></div>
-          <div class="row"><span class="role">Intern</span><span class="meta">Taipei, Taiwan / Remote</span></div>
-          <ul class="bullets">
-            <li>Studied the existing system architecture to build a thorough understanding of the company's infrastructure and workflows.</li>
-            <li>Collaborated with the team to integrate Kubernetes into the existing infrastructure.</li>
-          </ul>
+          <div class="when">Apr 2019 – Aug 2019</div>
+          <div class="what">
+            <div class="org">Chunghwa Telecom</div>
+            <div class="sub"><span class="role">Intern</span><span class="place">Taipei, Taiwan / Remote</span></div>
+            <ul class="bullets">
+              <li>Studied the existing system architecture to build a thorough understanding of the company's infrastructure and workflows.</li>
+              <li>Collaborated with the team to integrate Kubernetes into the existing infrastructure.</li>
+            </ul>
+          </div>
         </article>
       </div>
     </section>
@@ -361,30 +403,82 @@
     <section class="sec">
       <h2 class="section-title">Skills</h2>
       <div class="sec-body">
-        <dl class="skills">
-          <dt class="skill">Linux<span class="years">5+ years</span></dt>
-          <dd>Linux server setup, management, and monitoring, with extensive experience in SUSE and Ubuntu (Debian-based) distributions.</dd>
-          <dt class="skill">DevOps<span class="years">5+ years</span></dt>
-          <dd>CI/CD pipelines, workflow automation with Git and Docker, and containerized environments on Kubernetes.</dd>
-          <dt class="skill">Software Engineering<span class="years">5+ years</span></dt>
-          <dd>Backend services in JavaScript (Node.js) and data pipelines in Python. Learning Rust and Go.</dd>
-          <dt class="skill">Open Source<span class="years">5+ years</span></dt>
-          <dd>Enterprise solutions and training, community building and promotion, software engineering and documentation.</dd>
-          <dt class="skill">Education<span class="years">5+ years</span></dt>
-          <dd>Training, study circles, and workshops for companies. University teaching assistant and speaker since 2017.</dd>
-          <dt class="skill">Languages</dt>
-          <dd>Chinese (native, Mandarin) · English (professional)</dd>
-        </dl>
+        <article class="entry">
+          <div class="when">since 2016</div>
+          <div class="what">
+            <div class="skill">Linux</div>
+            <div class="desc">Linux server setup, management, and monitoring, with extensive experience in SUSE and Ubuntu (Debian-based) distributions.</div>
+          </div>
+        </article>
+        <article class="entry">
+          <div class="when">since 2018</div>
+          <div class="what">
+            <div class="skill">DevOps</div>
+            <div class="desc">CI/CD pipelines, workflow automation with Git and Docker, and containerized environments on Kubernetes.</div>
+          </div>
+        </article>
+        <article class="entry">
+          <div class="when">since 2017</div>
+          <div class="what">
+            <div class="skill">Software Engineering</div>
+            <div class="desc">Backend services in JavaScript (Node.js) and data pipelines in Python. Learning Rust and Go.</div>
+          </div>
+        </article>
+        <article class="entry">
+          <div class="when">since 2016</div>
+          <div class="what">
+            <div class="skill">Open Source</div>
+            <div class="desc">Enterprise solutions and training, community building and promotion, software engineering and documentation.</div>
+          </div>
+        </article>
+        <article class="entry">
+          <div class="when">since 2017</div>
+          <div class="what">
+            <div class="skill">Education</div>
+            <div class="desc">Training, study circles, and workshops for companies. University teaching assistant and speaker since 2017.</div>
+          </div>
+        </article>
+        <article class="entry">
+          <div class="when"></div>
+          <div class="what">
+            <div class="skill">Languages</div>
+            <div class="desc">Chinese (native, Mandarin) · English (professional)</div>
+          </div>
+        </article>
       </div>
     </section>
 
     <section class="sec">
       <h2 class="section-title">Certifications</h2>
       <div class="sec-body">
-        <div class="cert row"><span><a href="https://www.credly.com/badges/d73a1469-0760-491e-a52d-bcb5d66982be/public_url" target="_blank" rel="noopener noreferrer">Golden Kubestronaut</a><span class="plain">Linux Foundation</span></span><span class="meta">since Aug 2025</span></div>
-        <div class="cert row"><span><a href="https://badges.suse.com/985ba32d-1500-4117-90d8-263baa885742#acc.d2xprU7o" target="_blank" rel="noopener noreferrer">SUSE Certified Engineer (SCE) in SUSE Linux Enterprise Server</a><span class="plain">SUSE</span></span><span class="meta">since Jul 2025</span></div>
-        <div class="cert row"><span><a href="https://badges.suse.com/826ff80e-4b75-414a-9219-b8ea55a78a74#acc.qgSf14Ij" target="_blank" rel="noopener noreferrer">SUSE Certified Administrator (SCA) in Rancher Manager</a><span class="plain">SUSE</span></span><span class="meta">since Jul 2025</span></div>
-        <div class="cert row"><span><a href="https://drive.google.com/file/d/1NM0DIGWFhhrGoafUNUufQW2u4QIsueRX/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Proxmox VE</a><span class="plain">Proxmox</span></span><span class="meta">since Sep 2025</span></div>
+        <article class="entry cert">
+          <div class="when">Aug 2025</div>
+          <div class="what">
+            <div class="cert-name"><a href="https://www.credly.com/badges/d73a1469-0760-491e-a52d-bcb5d66982be/public_url" target="_blank" rel="noopener noreferrer">Golden Kubestronaut</a></div>
+            <div class="sub"><span class="issuer">Linux Foundation</span></div>
+          </div>
+        </article>
+        <article class="entry cert">
+          <div class="when">Sep 2025</div>
+          <div class="what">
+            <div class="cert-name"><a href="https://drive.google.com/file/d/1NM0DIGWFhhrGoafUNUufQW2u4QIsueRX/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Proxmox VE</a></div>
+            <div class="sub"><span class="issuer">Proxmox</span></div>
+          </div>
+        </article>
+        <article class="entry cert">
+          <div class="when">Jul 2025</div>
+          <div class="what">
+            <div class="cert-name"><a href="https://badges.suse.com/985ba32d-1500-4117-90d8-263baa885742#acc.d2xprU7o" target="_blank" rel="noopener noreferrer">SUSE Certified Engineer (SCE) in SUSE Linux Enterprise Server</a></div>
+            <div class="sub"><span class="issuer">SUSE</span></div>
+          </div>
+        </article>
+        <article class="entry cert">
+          <div class="when">Jul 2025</div>
+          <div class="what">
+            <div class="cert-name"><a href="https://badges.suse.com/826ff80e-4b75-414a-9219-b8ea55a78a74#acc.qgSf14Ij" target="_blank" rel="noopener noreferrer">SUSE Certified Administrator (SCA) in Rancher Manager</a></div>
+            <div class="sub"><span class="issuer">SUSE</span></div>
+          </div>
+        </article>
         <p class="note no-print">All certificates: <a href="/certificates">josh.tw/certificates</a></p>
       </div>
     </section>
@@ -393,16 +487,25 @@
       <h2 class="section-title">Education</h2>
       <div class="sec-body">
         <article class="entry">
-          <div class="row"><span class="org">National Taiwan University</span><span class="meta">2026 – present</span></div>
-          <div class="row"><span class="role">Ph.D. in Computer Science and Information Engineering</span></div>
+          <div class="when">2026 – present</div>
+          <div class="what">
+            <div class="org">National Taiwan University</div>
+            <div class="sub"><span class="role">Ph.D. in Computer Science and Information Engineering</span></div>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">National Chi Nan University</span><span class="meta">2022 – 2025</span></div>
-          <div class="row"><span class="role">Master of Information Management</span></div>
+          <div class="when">2022 – 2025</div>
+          <div class="what">
+            <div class="org">National Chi Nan University</div>
+            <div class="sub"><span class="role">Master of Information Management</span></div>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">Tamkang University</span><span class="meta">2015 – 2018</span></div>
-          <div class="row"><span class="role">Bachelor of Information Management</span></div>
+          <div class="when">2015 – 2018</div>
+          <div class="what">
+            <div class="org">Tamkang University</div>
+            <div class="sub"><span class="role">Bachelor of Information Management</span></div>
+          </div>
         </article>
       </div>
     </section>
@@ -411,73 +514,90 @@
       <h2 class="section-title">Community &amp; Campus</h2>
       <div class="sec-body">
         <article class="entry">
-          <div class="row"><span class="org">Kubernetes official website</span><span class="meta">2026</span></div>
-          <div class="row"><span class="role">Traditional Chinese Translation Contributor</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Translated Kubernetes website content into Traditional Chinese, making it more accessible to local developers.</li>
-          </ul>
+          <div class="when">2026</div>
+          <div class="what">
+            <div class="org">KubeSummit 2026</div>
+            <div class="sub"><span class="role">Workshop Speaker</span><span class="place">Taipei, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Led a hands-on workshop on building a self-service private cloud with Cluster API and kro, run twice for up to 60 attendees each.</li>
+              <li>Demonstrated zero-touch bare-metal provisioning and zero-downtime in-place cluster upgrades on a live testbed.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">National Chi Nan University</span><span class="meta">2023 – 2024</span></div>
-          <div class="row"><span class="role">Teaching Assistant, Practical Linux System Administration</span><span class="meta">Nantou, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Delivered lectures on selected topics in the course, covering practical system administration.</li>
-            <li>Provided after-class mentoring to help students master the material and troubleshoot system issues.</li>
-          </ul>
+          <div class="when">2026</div>
+          <div class="what">
+            <div class="org">Kubernetes official website</div>
+            <div class="sub"><span class="role">Traditional Chinese Translation Contributor</span><span class="place">Taipei, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Translated Kubernetes website content into Traditional Chinese, making it more accessible to local developers.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">SITCON Hackathon 2024</span><span class="meta">2024</span></div>
-          <div class="row"><span class="role">Volunteer, Rust Taiwan community booth</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Introduced the Rust programming language to attendees, highlighting its strengths for systems programming.</li>
-          </ul>
+          <div class="when">2023 – 2024</div>
+          <div class="what">
+            <div class="org">National Chi Nan University</div>
+            <div class="sub"><span class="role">Teaching Assistant, Practical Linux System Administration</span><span class="place">Nantou, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Delivered lectures on selected topics in the course, covering practical system administration.</li>
+              <li>Provided after-class mentoring to help students master the material and troubleshoot system issues.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">ModernWeb'19</span><span class="meta">2019</span></div>
-          <div class="row"><span class="role">Volunteer, Mozilla/Rust Taiwan community booth</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Introduced the Rust programming language, highlighting its safety and performance.</li>
-            <li>Advocated for Mozilla's mission of internet freedom, open standards, and privacy-first technology.</li>
-          </ul>
+          <div class="when">2024</div>
+          <div class="what">
+            <div class="org">SITCON Hackathon 2024</div>
+            <div class="sub"><span class="role">Volunteer, Rust Taiwan community booth</span><span class="place">Taipei, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Introduced the Rust programming language to attendees, highlighting its strengths for systems programming.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">Rust official website</span><span class="meta">2019</span></div>
-          <div class="row"><span class="role">Traditional Chinese Translation Contributor</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Translated Rust website content into Traditional Chinese, making it more accessible to local developers.</li>
-          </ul>
+          <div class="when">2019</div>
+          <div class="what">
+            <div class="org">ModernWeb'19</div>
+            <div class="sub"><span class="role">Volunteer, Mozilla/Rust Taiwan community booth</span><span class="place">Taipei, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Introduced the Rust programming language, highlighting its safety and performance.</li>
+              <li>Advocated for Mozilla's mission of internet freedom, open standards, and privacy-first technology.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">Tamkang University Hackathon</span><span class="meta">2017 – 2018</span></div>
-          <div class="row"><span class="role">Organizer</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Set up and maintained the official event website.</li>
-            <li>Coordinated with sponsoring companies and secured partnerships and sponsorships for the event.</li>
-          </ul>
+          <div class="when">2019</div>
+          <div class="what">
+            <div class="org">Rust official website</div>
+            <div class="sub"><span class="role">Traditional Chinese Translation Contributor</span><span class="place">Taipei, Taiwan</span></div>
+            <ul class="bullets">
+              <li>Translated Rust website content into Traditional Chinese, making it more accessible to local developers.</li>
+            </ul>
+          </div>
         </article>
         <article class="entry">
-          <div class="row"><span class="org">Tamkang University, Dept. of Information Management</span><span class="meta">2017</span></div>
-          <div class="row"><span class="role">Teaching Assistant, Programming Workshops</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Helped students understand course content and keep pace with the instructor.</li>
-          </ul>
-        </article>
-        <article class="entry">
-          <div class="row"><span class="org">Tamkang University, Dept. of Information Management</span><span class="meta">2017 – 2018</span></div>
-          <div class="row"><span class="role">Leader, Networking Association</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Organized regular courses on information technology topics to build students' technical skills.</li>
-            <li>Provided academic support and after-class tutoring to students in the department.</li>
-          </ul>
-        </article>
-        <article class="entry">
-          <div class="row"><span class="org">Tamkang University</span><span class="meta">2017 – 2018</span></div>
-          <div class="row"><span class="role">Leader, Information Consultant Organization</span><span class="meta">Taipei, Taiwan</span></div>
-          <ul class="bullets">
-            <li>Maintained and managed the Department of Information Management's servers.</li>
-            <li>Administered servers supporting student projects, providing a stable environment for academic and research work.</li>
-            <li>Oversaw maintenance and operation of the department's official website.</li>
-          </ul>
+          <div class="when">2017 – 2018</div>
+          <div class="what">
+            <div class="org">Tamkang University</div>
+            <div class="sub"><span class="loc">Taipei, Taiwan</span></div>
+            <div class="role-item">
+              <div class="role">Leader, Information Consultant Organization</div>
+              <ul class="bullets"><li>Ran the department's servers and website, including servers for student projects.</li></ul>
+            </div>
+            <div class="role-item">
+              <div class="role">Hackathon Organizer</div>
+              <ul class="bullets"><li>Built and maintained the event website and secured sponsorships.</li></ul>
+            </div>
+            <div class="role-item">
+              <div class="role">Leader, Networking Association</div>
+              <ul class="bullets"><li>Organized regular IT courses and after-class tutoring for students.</li></ul>
+            </div>
+            <div class="role-item">
+              <div class="role">Teaching Assistant, Programming Workshops</div>
+              <ul class="bullets"><li>Helped students keep pace with the instructor in programming workshops.</li></ul>
+            </div>
+          </div>
         </article>
       </div>
     </section>
