@@ -3,6 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <!-- Theme: the stored choice wins; otherwise follow the system setting. Runs before first paint. -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var system = matchMedia('(prefers-color-scheme: light)');
+      function stored() { try { return localStorage.getItem('theme'); } catch (e) { return null; } }
+      function apply(t) { root.dataset.theme = t; }
+      apply(stored() || (system.matches ? 'light' : 'dark'));
+      system.addEventListener('change', function (e) { if (!stored()) apply(e.matches ? 'light' : 'dark'); });
+      window.toggleTheme = function () {
+        var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+        apply(next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      };
+    })();
+  </script>
   <title>Josh Hsieh</title>
   <meta name="description" content="Josh Hsieh — Platform Engineer" />
   <!-- Google Tag Manager -->
@@ -42,6 +59,26 @@
       --purple:  #c678dd; /* Keyword, Cursor/TermCursor, @markup.link.url */
     }
 
+    /* Light mode: One Light, the light theme of the same plugin (themes/onelight.lua).
+       Chosen by the theme toggle, or by the system setting until the visitor picks one.
+       Token roles are unchanged; only the palette swaps. indentline is generated there as
+       darken(bg, 7.3) in HSL lightness, which gives #e7e7e7. */
+    :root { color-scheme: dark; }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg:      #fafafa;
+      --fg:      #6a6a6a;
+      --comment: #9b9fa6;
+      --line:    #e7e7e7;
+      --red:     #e05661;
+      --orange:  #ee9025;
+      --yellow:  #eea825;
+      --green:   #1da912;
+      --cyan:    #56b6c2;
+      --blue:    #118dc3;
+      --purple:  #9a77cf;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -78,6 +115,12 @@
       transition: all 0.15s;
     }
     .lang-btn.active { border-color: var(--blue); color: var(--blue); }
+
+    /* Theme toggle: shows the current mode (Tabler Icons sun/moon, MIT) */
+    .theme-btn { display: inline-flex; align-items: center; justify-content: center; margin-left: 8px; }
+    .ti { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2;
+          stroke-linecap: round; stroke-linejoin: round; }
+    :root[data-theme="light"] .ti-moon, :root:not([data-theme="light"]) .ti-sun { display: none; }
 
     /* Shell prompt, read as PS1 tokens */
     .prompt { display: flex; align-items: baseline; margin-bottom: 6px; flex-wrap: wrap; }
@@ -148,6 +191,7 @@
     <div class="lang-toggle">
       <button class="lang-btn active" aria-pressed="true" onclick="setLang('en', this)">EN</button>
       <button class="lang-btn" aria-pressed="false" onclick="setLang('zh', this)">ZH-TW</button>
+      <button class="lang-btn theme-btn" type="button" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode"><svg class="ti ti-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg><svg class="ti ti-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"/></svg></button>
     </div>
 
     <!-- whoami -->
@@ -275,7 +319,7 @@
       document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
       document.body.classList.remove('en', 'zh');
       document.body.classList.add(lang);
-      document.querySelectorAll('.lang-btn').forEach(b => {
+      document.querySelectorAll('.lang-btn:not(.theme-btn)').forEach(b => {
         b.classList.remove('active');
         b.setAttribute('aria-pressed', 'false');
       });

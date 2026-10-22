@@ -1,33 +1,487 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>CV</title>
-  <meta name="description" content="Josh's CV" />
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <!-- Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <!-- Theme: the stored choice wins; otherwise follow the system setting. Runs before first paint. -->
   <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({"gtm.start": new Date().getTime(), event: "gtm.js"});
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != "dataLayer" ? "&l=" + l : "";
-      j.async = true;
-      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, "script", "dataLayer", "GTM-MF8MP7FN");
+    (function () {
+      var root = document.documentElement;
+      var system = matchMedia('(prefers-color-scheme: light)');
+      function stored() { try { return localStorage.getItem('theme'); } catch (e) { return null; } }
+      function apply(t) { root.dataset.theme = t; }
+      apply(stored() || (system.matches ? 'light' : 'dark'));
+      system.addEventListener('change', function (e) { if (!stored()) apply(e.matches ? 'light' : 'dark'); });
+      window.toggleTheme = function () {
+        var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+        apply(next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      };
+    })();
   </script>
+  <title>CV · Josh Hsieh</title>
+  <meta name="description" content="Josh Hsieh (謝禹沆) — Platform Engineer, Open Source Advocate. CV." />
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MF8MP7FN');</script>
   <!-- End Google Tag Manager -->
-  <script type="text/javascript" charset="utf-8">
-    location.replace("https://docs.google.com/document/d/13BsR44929g95YvRrmFVp-22UvrVIj23vPLmyfgTPv_M/edit?usp=sharing");
-  </script>
-</head>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/lato-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/raleway-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    /* Open-source fonts, self-hosted (SIL Open Font License 1.1):
+       Raleway for headings and names, Lato for text.
+       Noto Sans TC is subset to the three glyphs of the Chinese name (謝禹沆). */
+    @font-face { font-family: 'Lato'; src: url('/fonts/lato-latin-400-normal.woff2') format('woff2');
+                 font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Lato'; src: url('/fonts/lato-latin-400-italic.woff2') format('woff2');
+                 font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: 'Lato'; src: url('/fonts/lato-latin-700-normal.woff2') format('woff2');
+                 font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Raleway'; src: url('/fonts/raleway-latin-600-normal.woff2') format('woff2');
+                 font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Raleway'; src: url('/fonts/raleway-latin-700-normal.woff2') format('woff2');
+                 font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Noto Sans TC Name'; src: url('/fonts/noto-sans-tc-name-400.woff2') format('woff2');
+                 font-weight: 400; font-style: normal; font-display: swap; }
 
+    /* Same One Dark Pro palette as index.html (olimorris/onedarkpro.nvim, themes/onedark.lua).
+       The CV is read as a rendered Markdown document, so roles follow
+       highlights/filetypes/markdown.lua and highlights/plugins/treesitter.lua:
+         # title            @text.title.markdown            red, bold
+         ## heading         @markup.heading                 red
+         - list marker      @markup.list.markdown           yellow
+         **strong**         @markup.strong.markdown_inline  orange, bold   (company, school, skill)
+         *italic*           @markup.italic.markdown_inline  purple, italic (job title, degree)
+         [label](url)       @markup.link.label / .url       blue / purple on hover
+         `raw`              @text.literal.markdown_inline   green          (tagline)
+         > quote            @markup.quote.markdown          comment        (dates, places, meta)
+         rules              indentline                      #3b4048 */
+    :root {
+      --bg:      #282c34;
+      --fg:      #abb2bf;
+      --comment: #7f848e;
+      --line:    #3b4048;
+      --red:     #e06c75;
+      --orange:  #d19a66;
+      --yellow:  #e5c07b;
+      --green:   #98c379;
+      --blue:    #61afef;
+      --purple:  #c678dd;
+      --text:    'Lato', sans-serif;
+      --display: 'Raleway', 'Lato', sans-serif;
+      --cjk:     'Noto Sans TC Name', 'Lato', sans-serif;
+      --label-w: 150px;   /* left column for section titles */
+      --gap:     40px;
+    }
+
+    /* Light mode: One Light, the light theme of the same plugin (themes/onelight.lua).
+       Chosen by the theme toggle, or by the system setting until the visitor picks one.
+       Token roles are unchanged; only the palette swaps. indentline is generated there as
+       darken(bg, 7.3) in HSL lightness, which gives #e7e7e7. */
+    :root { color-scheme: dark; }
+    @media screen {
+      :root[data-theme="light"] {
+        color-scheme: light;
+        --bg:      #fafafa;
+        --fg:      #6a6a6a;
+        --comment: #9b9fa6;
+        --line:    #e7e7e7;
+        --red:     #e05661;
+        --orange:  #ee9025;
+        --yellow:  #eea825;
+        --green:   #1da912;
+        --blue:    #118dc3;
+        --purple:  #9a77cf;
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 56px 24px 80px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .cv { max-width: 880px; margin: 0 auto; }
+
+    a { color: var(--blue); text-decoration: none; border-bottom: 1px solid var(--line);
+        transition: color 0.15s, border-color 0.15s; }
+    a:hover { color: var(--purple); border-color: var(--purple); }
+
+    /* Raleway defaults to old-style figures; lining figures read better in names like ModernWeb'19. */
+    .name, .section-title, .org, .skill { font-family: var(--display); font-variant-numeric: lining-nums; }
+
+    /* ---------- Header: aligned with the content column ---------- */
+    .cv-header { display: flex; flex-direction: column; padding-left: calc(var(--label-w) + var(--gap)); }
+    .cv-header .toolbar { order: -1; align-self: flex-end; margin-bottom: 20px; }
+    .name { color: var(--red); font-size: 38px; font-weight: 700; line-height: 1.15; }
+    .name-zh { display: inline-block; font-family: var(--cjk); color: var(--comment);
+               font-size: 19px; font-weight: 400; margin-left: 10px; letter-spacing: 0.05em; }
+    .tagline { color: var(--green); font-size: 17px; margin-top: 6px; }
+
+    .contact-line { margin-top: 12px; font-size: 14.5px; display: flex; flex-wrap: wrap; column-gap: 22px; row-gap: 4px; }
+    .ci { display: inline-flex; align-items: center; gap: 6px; }
+    .ic { width: 1.05em; height: 1.05em; flex-shrink: 0; color: var(--comment);
+          fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .toolbar { display: flex; gap: 8px; align-items: stretch; font-size: 13px; } /* stretch: icon-only button matches text buttons */
+    .toolbar a, .toolbar button {
+      border: 1px solid var(--line); border-radius: 4px; padding: 3px 12px;
+      background: none; color: var(--comment); font: inherit; cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .toolbar a:hover, .toolbar button:hover { color: var(--blue); border-color: var(--blue); }
+
+    /* Theme toggle: shows the current mode (Tabler Icons sun/moon, MIT) */
+    .theme-btn { display: inline-flex; align-items: center; justify-content: center; }
+    .ti { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2;
+          stroke-linecap: round; stroke-linejoin: round; }
+    :root[data-theme="light"] .ti-moon, :root:not([data-theme="light"]) .ti-sun { display: none; }
+
+    /* ---------- Sections: title in a left column, content on the right ---------- */
+    .sec {
+      display: grid; grid-template-columns: var(--label-w) 1fr; column-gap: var(--gap);
+      margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line);
+    }
+    .section-title { color: var(--red); font-size: 18px; font-weight: 700; line-height: 1.35; }
+    .sec-body { min-width: 0; }
+    .lead { font-size: 17px; line-height: 1.65; }
+    .note { color: var(--comment); font-size: 14px; margin-top: 14px; }
+
+    /* Entries: experience, community, education, certifications */
+    .entry { margin-bottom: 26px; }
+    .entry:last-child { margin-bottom: 0; }
+    .row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; column-gap: 16px; }
+    .org  { color: var(--orange); font-size: 17px; font-weight: 700; }
+    .role { color: var(--purple); font-style: italic; }
+    .meta { color: var(--comment); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .plain { color: var(--fg); }
+
+    .bullets { list-style: none; margin-top: 8px; }
+    .bullets li { position: relative; padding-left: 1.2em; margin-bottom: 4px; }
+    .bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--yellow); }
+
+    /* Compact rows for certifications */
+    .cert { margin-bottom: 10px; }
+    .cert:last-child { margin-bottom: 0; }
+    .cert a { font-weight: 700; }
+    .cert .plain { margin-left: 10px; }
+
+    /* Skills: name + years on the left, description on the right */
+    .skills { display: grid; grid-template-columns: 190px 1fr; column-gap: 24px; row-gap: 14px; }
+    .skill { color: var(--orange); font-size: 17px; font-weight: 700; line-height: 1.4; }
+    .years { display: block; color: var(--comment); font-family: var(--text); font-size: 13.5px; font-weight: 400; }
+
+    @media screen and (max-width: 720px) {
+      body { font-size: 15px; padding: 32px 16px 56px; }
+      .cv-header { padding-left: 0; }
+      .name { font-size: 30px; }
+      .name-zh { display: block; margin: 6px 0 0; }
+      .sec { grid-template-columns: 1fr; row-gap: 14px; margin-top: 32px; }
+      .skills { grid-template-columns: 1fr; row-gap: 2px; }
+      .skills dd { margin-bottom: 12px; }
+      .meta { white-space: normal; }
+    }
+
+    /* ---------- Print: same layout on white, for applications and ATS parsing ---------- */
+    /* Declaring (empty) page-margin boxes makes Chrome drop its default print header/footer
+       (date, title, URL, page numbers) while keeping the page margins. */
+    @page { size: A4; margin: 13mm 15mm;
+            @top-left { content: ""; } @bottom-right { content: ""; } }
+    @media print {
+      :root {
+        --bg: #fff; --fg: #24292f; --comment: #57606a; --line: #d0d7de;
+        --red: #24292f; --yellow: #24292f; --orange: #24292f; --green: #57606a;
+        --blue: #0b5cad; --purple: #24292f;
+        --label-w: 27mm; --gap: 6mm;
+      }
+      body { font-size: 9.5pt; line-height: 1.42; padding: 0; }
+      /* Firefox drops ligature and alternate-figure glyphs from the PDF text layer
+         ("workows", "Hackathon "), which breaks copy/paste and ATS parsing. */
+      * { font-variant-ligatures: none; font-variant-numeric: normal !important; font-feature-settings: normal; }
+      /* Firefox cannot split a grid item across pages, so a long section jumps to the next page whole.
+         Print sections as plain blocks instead. The title stays in normal flow (so PDF text order is
+         "title, then content" for ATS) but has zero height and is pulled into the left column. */
+      .sec { display: block; padding-left: calc(var(--label-w) + var(--gap)); }
+      .section-title { height: 0; width: var(--label-w); margin-left: calc(-1 * (var(--label-w) + var(--gap)));
+                       overflow: visible; break-after: avoid; }
+      .cv { max-width: none; }
+      .no-print { display: none !important; }
+      .name { font-size: 22pt; }
+      .name-zh { font-size: 12pt; }
+      .tagline { font-size: 11pt; margin-top: 2px; }
+      .contact-line { font-size: 9pt; margin-top: 5px; column-gap: 12px; }
+      .ci { gap: 4px; }
+      a { border-bottom: none; }
+      .sec { margin-top: 10px; padding-top: 8px; }
+      .section-title { font-size: 11pt; }
+      .lead { font-size: 9.5pt; }
+      .org, .skill { font-size: 10.5pt; }
+      .meta, .years { font-size: 8.5pt; }
+      .entry { margin-bottom: 8px; break-inside: avoid; }
+      .cert { margin-bottom: 3px; }
+      .skills { grid-template-columns: 40mm 1fr; row-gap: 5px; column-gap: 4mm; }
+      .bullets { margin-top: 2px; }
+      .bullets li { margin-bottom: 1px; }
+      /* Native list markers keep PDF text order intact for ATS parsing. */
+      .bullets { list-style: disc; padding-left: 1.3em; }
+      .bullets li { position: static; padding-left: 0; }
+      .bullets li::before { content: none; }
+    }
+  </style>
+</head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MF8MP7FN" height="0" width="0"
-      style="display: none; visibility: hidden"></iframe></noscript>
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MF8MP7FN"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
   <!-- End Google Tag Manager (noscript) -->
-</body>
 
+  <main class="cv">
+
+    <header class="cv-header">
+      <h1 class="name">Yu Hang Hsieh <span class="name-zh">謝禹沆 · Josh</span></h1>
+      <p class="tagline">Platform Engineer · Open Source Advocate</p>
+      <!-- Icons: Tabler Icons v3.49.0 (MIT), https://tabler.io/icons -->
+      <p class="contact-line">
+        <span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M3 7l9 6l9 -6"/></svg><a href="mailto:josh.hsieh@linux.com">josh.hsieh@linux.com</a></span>
+        <span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg><a href="https://www.josh.tw">www.josh.tw</a></span>
+        <span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg><a href="https://github.com/jtr860830" target="_blank" rel="noopener noreferrer">github.com/jtr860830</a></span>
+        <span class="ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 1 0 -4 0"/><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4l0 -10"/></svg><a href="https://www.linkedin.com/in/jtr860830/" target="_blank" rel="noopener noreferrer">linkedin.com/in/jtr860830</a></span>
+      </p>
+      <nav class="toolbar no-print">
+        <a href="/">josh.tw</a>
+        <button type="button" onclick="window.print()">Save as PDF</button>
+        <button type="button" class="theme-btn" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode"><svg class="ti ti-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg><svg class="ti ti-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"/></svg></button>
+      </nav>
+    </header>
+
+    <section class="sec">
+      <h2 class="section-title">Summary</h2>
+      <div class="sec-body">
+        <p class="lead">Platform engineer and system architect, passionate about open-source contributions and designing innovative solutions.</p>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="section-title">Experience</h2>
+      <div class="sec-body">
+        <article class="entry">
+          <div class="row"><span class="org">Brobridge</span><span class="meta">Mar 2026 – present</span></div>
+          <div class="row"><span class="role">Platform Engineer</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Leading enterprise-grade Kubernetes implementations across diverse distributions, integrating the platform with corporate logging systems, monitoring stacks, and legacy infrastructure.</li>
+            <li>Architecting high-availability Linux infrastructure and advanced networking (BGP, LVS, and overlay networks) to optimize performance, security, and stability in large-scale environments.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">SUSE</span><span class="meta">Jun 2025 – Feb 2026</span></div>
+          <div class="row"><span class="role">Solution Architect</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Orchestrated and managed container platforms with Rancher and RKE2, and implemented automated GitOps workflows with Fleet and Argo CD for scalable cluster operations.</li>
+            <li>Maintained and optimized SUSE Linux Enterprise Server (SLES) infrastructure for stability, security, and performance across internal server environments.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Imonology</span><span class="meta">Apr 2022 – Jun 2025</span></div>
+          <div class="row"><span class="role">Software Engineer</span><span class="meta">Remote</span></div>
+          <ul class="bullets">
+            <li>Designed and developed systems tailored to client needs, delivering customized and scalable solutions.</li>
+            <li>Maintained and managed internal Linux servers, ensuring stability, security, and performance.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Joint Commonwealth Fund</span><span class="meta">Mar 2022 – Jun 2025</span></div>
+          <div class="row"><span class="role">Software Engineer</span><span class="meta">Remote</span></div>
+          <ul class="bullets">
+            <li>Designed and implemented blockchain-based web APIs, delivering secure and scalable solutions for decentralized applications.</li>
+            <li>Maintained and managed internal Linux servers, ensuring stability, security, and performance.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Billionaire</span><span class="meta">Nov 2022 – Sep 2023</span></div>
+          <div class="row"><span class="role">Software Engineer</span><span class="meta">Taichung, Taiwan / Remote</span></div>
+          <ul class="bullets">
+            <li>Integrated automated development workflows, including Git, CI/CD pipelines, auto-formatting, and auto-linting, significantly improving efficiency and code quality.</li>
+            <li>Designed and implemented a client's e-commerce website, delivering a robust and scalable platform for online sales.</li>
+            <li>Maintained and optimized client website servers for reliability, security, and high availability.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">GLSoft</span><span class="meta">Jul 2022 – Nov 2022</span></div>
+          <div class="row"><span class="role">Software Engineer</span><span class="meta">Remote</span></div>
+          <ul class="bullets">
+            <li>Introduced agile development practices, significantly improving the team's development process.</li>
+            <li>Onboarded and trained new hires to quickly adapt to company technologies and workflows.</li>
+            <li>Maintained and updated the company's product websites, proactively fixing bugs to improve user experience and reliability.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">YahuTech</span><span class="meta">Nov 2021 – Aug 2022</span></div>
+          <div class="row"><span class="role">Software Engineer</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Maintained and optimized the company's internal Linux servers for stability and performance.</li>
+            <li>Developed and deployed web services with an internal framework, delivering features aligned with business needs.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">SourceZones</span><span class="meta">Aug 2019 – Aug 2021</span></div>
+          <div class="row"><span class="role">Software Engineer</span><span class="meta">Taipei, Taiwan / Remote</span></div>
+          <ul class="bullets">
+            <li>Designed and implemented a client data synchronization system, enabling fully automated data updates.</li>
+            <li>Conducted on-site maintenance and troubleshooting at client locations, resolving issues promptly.</li>
+            <li>Developed RESTful APIs for comprehensive Taiwan company information.</li>
+            <li>Built and maintained web crawlers to extract and aggregate data on Taiwan companies.</li>
+            <li>Established and optimized data pipelines for processing crawler output.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Chunghwa Telecom</span><span class="meta">Apr 2019 – Aug 2019</span></div>
+          <div class="row"><span class="role">Intern</span><span class="meta">Taipei, Taiwan / Remote</span></div>
+          <ul class="bullets">
+            <li>Studied the existing system architecture to build a thorough understanding of the company's infrastructure and workflows.</li>
+            <li>Collaborated with the team to integrate Kubernetes into the existing infrastructure.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="section-title">Skills</h2>
+      <div class="sec-body">
+        <dl class="skills">
+          <dt class="skill">Linux<span class="years">5+ years</span></dt>
+          <dd>Linux server setup, management, and monitoring, with extensive experience in SUSE and Ubuntu (Debian-based) distributions.</dd>
+          <dt class="skill">DevOps<span class="years">5+ years</span></dt>
+          <dd>CI/CD pipelines, workflow automation with Git and Docker, and containerized environments on Kubernetes.</dd>
+          <dt class="skill">Software Engineering<span class="years">5+ years</span></dt>
+          <dd>Backend services in JavaScript (Node.js) and data pipelines in Python. Learning Rust and Go.</dd>
+          <dt class="skill">Open Source<span class="years">5+ years</span></dt>
+          <dd>Enterprise solutions and training, community building and promotion, software engineering and documentation.</dd>
+          <dt class="skill">Education<span class="years">5+ years</span></dt>
+          <dd>Training, study circles, and workshops for companies. University teaching assistant and speaker since 2017.</dd>
+          <dt class="skill">Languages</dt>
+          <dd>Chinese (native, Mandarin) · English (professional)</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="section-title">Certifications</h2>
+      <div class="sec-body">
+        <div class="cert row"><span><a href="https://www.credly.com/badges/d73a1469-0760-491e-a52d-bcb5d66982be/public_url" target="_blank" rel="noopener noreferrer">Golden Kubestronaut</a><span class="plain">Linux Foundation</span></span><span class="meta">since Aug 2025</span></div>
+        <div class="cert row"><span><a href="https://badges.suse.com/985ba32d-1500-4117-90d8-263baa885742#acc.d2xprU7o" target="_blank" rel="noopener noreferrer">SUSE Certified Engineer (SCE) in SUSE Linux Enterprise Server</a><span class="plain">SUSE</span></span><span class="meta">since Jul 2025</span></div>
+        <div class="cert row"><span><a href="https://badges.suse.com/826ff80e-4b75-414a-9219-b8ea55a78a74#acc.qgSf14Ij" target="_blank" rel="noopener noreferrer">SUSE Certified Administrator (SCA) in Rancher Manager</a><span class="plain">SUSE</span></span><span class="meta">since Jul 2025</span></div>
+        <div class="cert row"><span><a href="https://drive.google.com/file/d/1NM0DIGWFhhrGoafUNUufQW2u4QIsueRX/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Proxmox VE</a><span class="plain">Proxmox</span></span><span class="meta">since Sep 2025</span></div>
+        <p class="note no-print">All certificates: <a href="/certificates">josh.tw/certificates</a></p>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="section-title">Education</h2>
+      <div class="sec-body">
+        <article class="entry">
+          <div class="row"><span class="org">National Taiwan University</span><span class="meta">2026 – present</span></div>
+          <div class="row"><span class="role">Ph.D. in Computer Science and Information Engineering</span></div>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">National Chi Nan University</span><span class="meta">2022 – 2025</span></div>
+          <div class="row"><span class="role">Master of Information Management</span></div>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Tamkang University</span><span class="meta">2015 – 2018</span></div>
+          <div class="row"><span class="role">Bachelor of Information Management</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="section-title">Community &amp; Campus</h2>
+      <div class="sec-body">
+        <article class="entry">
+          <div class="row"><span class="org">Kubernetes official website</span><span class="meta">2026</span></div>
+          <div class="row"><span class="role">Traditional Chinese Translation Contributor</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Translated Kubernetes website content into Traditional Chinese, making it more accessible to local developers.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">National Chi Nan University</span><span class="meta">2023 – 2024</span></div>
+          <div class="row"><span class="role">Teaching Assistant, Practical Linux System Administration</span><span class="meta">Nantou, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Delivered lectures on selected topics in the course, covering practical system administration.</li>
+            <li>Provided after-class mentoring to help students master the material and troubleshoot system issues.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">SITCON Hackathon 2024</span><span class="meta">2024</span></div>
+          <div class="row"><span class="role">Volunteer, Rust Taiwan community booth</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Introduced the Rust programming language to attendees, highlighting its strengths for systems programming.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">ModernWeb'19</span><span class="meta">2019</span></div>
+          <div class="row"><span class="role">Volunteer, Mozilla/Rust Taiwan community booth</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Introduced the Rust programming language, highlighting its safety and performance.</li>
+            <li>Advocated for Mozilla's mission of internet freedom, open standards, and privacy-first technology.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Rust official website</span><span class="meta">2019</span></div>
+          <div class="row"><span class="role">Traditional Chinese Translation Contributor</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Translated Rust website content into Traditional Chinese, making it more accessible to local developers.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Tamkang University Hackathon</span><span class="meta">2017 – 2018</span></div>
+          <div class="row"><span class="role">Organizer</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Set up and maintained the official event website.</li>
+            <li>Coordinated with sponsoring companies and secured partnerships and sponsorships for the event.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Tamkang University, Dept. of Information Management</span><span class="meta">2017</span></div>
+          <div class="row"><span class="role">Teaching Assistant, Programming Workshops</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Helped students understand course content and keep pace with the instructor.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Tamkang University, Dept. of Information Management</span><span class="meta">2017 – 2018</span></div>
+          <div class="row"><span class="role">Leader, Networking Association</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Organized regular courses on information technology topics to build students' technical skills.</li>
+            <li>Provided academic support and after-class tutoring to students in the department.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="row"><span class="org">Tamkang University</span><span class="meta">2017 – 2018</span></div>
+          <div class="row"><span class="role">Leader, Information Consultant Organization</span><span class="meta">Taipei, Taiwan</span></div>
+          <ul class="bullets">
+            <li>Maintained and managed the Department of Information Management's servers.</li>
+            <li>Administered servers supporting student projects, providing a stable environment for academic and research work.</li>
+            <li>Oversaw maintenance and operation of the department's official website.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+  </main>
+</body>
 </html>
